@@ -61,23 +61,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-// const uint16_t rgb_i_codes[] = {
-//    RGB_VAI,
-//    RGB_SAI,
-//    RGB_HUI,
-//    RGB_SPI,
-//    RGB_MOD
-// };
-
-// const uint16_t rgb_d_codes[] = {
-//    RGB_VAD,
-//    RGB_SAD,
-//    RGB_HUD,
-//    RGB_SPD,
-//    RGB_RMOD
-// };
-
-// int rgb_setting_index = 0;
 int menu_tick = 0;
 
 const int SHOW_MENU_TIMEOUT = 3000;
@@ -138,26 +121,6 @@ void oled_task_user(void) {
 
       displayMenu(menustate);
 
-      // switch (rgb_setting_index) {
-      //    case 0:
-      //    oled_write_P(PSTR("BRIGHTNESS\n"), false);
-      //    break;
-      //    case 1:
-      //    oled_write_P(PSTR("SATURATION\n"), false);
-      //    break;
-      //    case 2:
-      //    oled_write_P(PSTR("HUE\n"), false);
-      //    break;
-      //    case 3:
-      //    oled_write_P(PSTR("SPEED\n"), false);
-      //    break;
-      //    case 4:
-      //    oled_write_P(PSTR("MODE\n"), false);
-      //    break;
-      //    default:
-      //    oled_write_P(PSTR("uh oh\n"), false);
-      // }
-      // oled_write_P(PSTR("\n\n"), false);
       menu_tick--;
    }
 
@@ -175,18 +138,12 @@ void encoder_update_user(uint8_t index, bool clockwise) {
       }
    }
    else if (index == 1) {  // Second encoder - left
-      // keyrecord_t keyrecord;
-      // keyrecord.event.pressed = true;
       if (clockwise) {
-         // tap_code(RGB_VAI);
-         // process_rgb(rgb_i_codes[rgb_setting_index], &keyrecord);
          menu_tick = SHOW_MENU_TIMEOUT;
 
          advanceState(&menustate, INPUT_INCREASE);
       }
       else {
-         //   tap_code(RGB_VAD);
-         // process_rgb(rgb_d_codes[rgb_setting_index], &keyrecord);
          menu_tick = SHOW_MENU_TIMEOUT;
 
          advanceState(&menustate, INPUT_DECREASE);
@@ -209,7 +166,6 @@ void dip_switch_update_user(uint8_t index, bool active) {
       case 1:          // left encoder
       if (active)  // pressed
       {
-         // rgb_setting_index = (rgb_setting_index + 1) % 5;
          menu_tick = SHOW_MENU_TIMEOUT;
 
          advanceState(&menustate, INPUT_SELECT);
