@@ -57,7 +57,7 @@ doxygen/
 .vscode/ipch/
 .stfolder
 .tags
-*.code_workspace
+*.code-workspace
 
 # ignore image files
 *.png
