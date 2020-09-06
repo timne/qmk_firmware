@@ -67,6 +67,7 @@ const int SHOW_MENU_TIMEOUT = 3000;
 
 bool rewrite_layer_info = false;
 
+
 menu_state_t menustate;
 
 #ifdef OLED_DRIVER_ENABLE
@@ -123,7 +124,6 @@ void oled_task_user(void) {
 
       menu_tick--;
    }
-
 }
 #endif
 
@@ -179,6 +179,7 @@ void dip_switch_update_user(uint8_t index, bool active) {
 
 void suspend_power_down_user(void)
 {
+   oled_off();
    rgb_matrix_set_suspend_state(true);
 }
 
