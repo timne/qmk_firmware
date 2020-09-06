@@ -34,6 +34,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_MATRIX_CENTER { 104, 42 }
 
 #define RGB_MATRIX_HUE_STEP 7
-#define RGB_MATRIX_SAT_STEP 13
-#define RGB_MATRIX_VAL_STEP 13
-#define RGB_MATRIX_SPD_STEP 13
+#define RGB_MATRIX_SAT_STEP 14
+#define RGB_MATRIX_VAL_STEP 14
+#define RGB_MATRIX_SPD_STEP 14
