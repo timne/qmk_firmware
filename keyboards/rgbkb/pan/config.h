@@ -29,9 +29,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_COLS 13
 
 #define UNUSED_PINS
-#define ENCODER_RESOLUTION 4
+#define ENCODER_RESOLUTION 2
 #define RGBLED_NUM 64
-#define RGBLIGHT_ANIMATIONS
+// #define RGBLIGHT_ANIMATIONS
 #define DRIVER_LED_TOTAL RGBLED_NUM
 
 /* COL2ROW, ROW2COL*/
@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_LIMIT_VAL 120
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE 5
+#define DEBOUNCE 2
 
 #define BOOTMAGIC_LITE_ROW 0
 #define BOOTMAGIC_LITE_COLUMN 0

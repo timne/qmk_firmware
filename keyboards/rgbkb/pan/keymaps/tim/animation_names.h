@@ -121,5 +121,11 @@ char* rgbmatrix_anim_names[] =
    "SOLID_MULTISPLASH",
 #endif   // multi
 #endif
+#if defined(RGB_MATRIX_CUSTOM_USER)
+   "Custom 1",
+   "Custom 2",
+#endif
    "end"
 };
+
+const int RGBMATRIX_ANIM_NAMES_SIZE = sizeof(rgbmatrix_anim_names) / sizeof(rgbmatrix_anim_names[0]);

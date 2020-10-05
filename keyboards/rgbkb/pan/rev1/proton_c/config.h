@@ -23,7 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENCODERS_PAD_B { B15, B12 }
 #define DIP_SWITCH_PINS { A0, B13 }
 #define RGB_DI_PIN A3
-#define ENCODER_DIRECTION_FLIP
 #define TAP_CODE_DELAY 15
 
 #define RGB_DISABLE_WHEN_USB_SUSPENDED true
@@ -37,3 +36,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_MATRIX_SAT_STEP 14
 #define RGB_MATRIX_VAL_STEP 14
 #define RGB_MATRIX_SPD_STEP 14
+
+#define LED_HITS_TO_REMEMBER 20

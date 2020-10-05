@@ -45,6 +45,8 @@ void advanceState(menu_state_t* state, enum menu_state_input input)
          keyrecord_t keyrecord;
          keyrecord.event.pressed = true;
          process_rgb(code, &keyrecord);
+
+#ifdef AUDIO_ENABLE
          process_music(code, &keyrecord);
 
          // special thing for scale because there is no way to read it back
@@ -52,6 +54,7 @@ void advanceState(menu_state_t* state, enum menu_state_input input)
          {
             current_music_mode = (current_music_mode + 1) % 4;
          }
+#endif
       }
       else
       {

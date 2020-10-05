@@ -18,5 +18,7 @@ DIP_SWITCH_ENABLE = yes
 
 AUDIO_ENABLE = yes
 
+RGB_MATRIX_CUSTOM_USER = yes
+
 # Do not edit past here
 include keyboards/$(KEYBOARD)/post_rules.mk

@@ -2,6 +2,7 @@
 
 #include QMK_KEYBOARD_H
 #include "quantum.h"
+#include "rgb_matrix.h"
 
 #include "string.h"
 
@@ -13,9 +14,11 @@ void hueGetDisplayVal(char* buffer, int buf_len);
 void speedGetDisplayVal(char* buffer, int buf_len);
 void nameGetDisplayVal(char* buffer, int buf_len);
 void toggleRgbGetDisplayVal(char* buffer, int buf_len);
+
+#ifdef AUDIO_ENABLE
 void toggleMusicGetDisplayVal(char* buffer, int buf_len);
 void musicScaleGetDisplayVal(char* buffer, int buf_len);
-
+#endif
 void settingValToIndicator(int val, int max_val, char* buffer, int buffer_len);
 
 enum settings
@@ -26,8 +29,10 @@ enum settings
    SPEED,
    MODE,
    TOGGLE_RGB,
+#ifdef AUDIO_ENABLE
    TOGGLE_MUSIC_MODE,
    MUSIC_SCALE,
+#endif
    NUM_SETTINGS
 };
 
@@ -75,7 +80,9 @@ const struct setting settings_data[] = {
       .icode = RGB_TOG,
       .dcode = RGB_TOG,
       .getDisplayVal = toggleRgbGetDisplayVal
-   },
+   }
+#ifdef AUDIO_ENABLE
+   ,
    {
       .name = "Toggle Music Mode",
       .icode = MU_TOG,
@@ -88,6 +95,7 @@ const struct setting settings_data[] = {
       .dcode = MU_MOD,
       .getDisplayVal = musicScaleGetDisplayVal
    }
+#endif
 };
 
 void valueGetDisplayVal(char* buffer, int buf_len)
@@ -112,7 +120,16 @@ void speedGetDisplayVal(char* buffer, int buf_len)
 
 void nameGetDisplayVal(char* buffer, int buf_len)
 {
-   strncpy(buffer, rgbmatrix_anim_names[rgb_matrix_get_mode()], buf_len);
+   int mode_index = rgb_matrix_get_mode();
+   if (RGBMATRIX_ANIM_NAMES_SIZE - 1 <= mode_index)
+   {
+      strncpy(buffer, "name not found", buf_len);
+   }
+   else
+   {
+      strncpy(buffer, rgbmatrix_anim_names[rgb_matrix_get_mode()], buf_len);
+   }
+
    buffer[buf_len-1] = '\0';
 }
 
@@ -128,6 +145,7 @@ void toggleRgbGetDisplayVal(char* buffer, int buf_len)
    }
 }
 
+#ifdef AUDIO_ENABLE
 void toggleMusicGetDisplayVal(char* buffer, int buf_len)
 {
    if(is_music_on())
@@ -161,6 +179,7 @@ void musicScaleGetDisplayVal(char* buffer, int buf_len)
       break;
    }
 }
+#endif
 
 void settingValToIndicator(int val, int max_val, char* buffer, int buffer_len)
 {

@@ -10,7 +10,6 @@
 enum layer_number {
    _QWERTY = 0,
    _FN,
-   _ADJ
 };
 
 #define FN_ESC   LT(_FN, KC_ESC)
@@ -36,34 +35,26 @@ enum layer_number {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_QWERTY] = _LAYOUT( \
-      KC_ESC,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,   KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_0,   KC_GRV, \
-      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,         \
-      KC_CAPS,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,   KC_H,   KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          \
-      KC_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_RSFT, \
-      KC_LCTL,   KC_LGUI, KC_LALT, KC_LALT, MO(_FN), KC_SPC, KC_BSPC,MO(_FN), KC_RALT, KC_RALT, KC_RGUI, KC_RCTL         \
+      KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,   KC_6,   KC_7,    KC_8,    KC_9,    KC_0,    KC_0,  KC_BSPC, \
+      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,         \
+      KC_CAPS, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,   KC_H,   KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          \
+      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT, KC_RSFT, \
+      KC_LCTL, KC_LGUI, KC_LALT, KC_LALT, MO(_FN), KC_SPC, KC_DEL, MO(_FN), KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT         \
    ),
 
    [_FN] = _LAYOUT( \
       KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F11,  KC_F12, \
-      KC_GRV , KC_PSCR, KC_SLCK, KC_PAUS, _______, _______, _______, KC_MINS, KC_EQL , KC_LBRC, KC_RBRC, _______,         \
-      _______, _______, _______, _______, KC_INS , KC_PGUP, KC_HOME, KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT, _______,         \
-      _______, _______, _______, _______, KC_DEL , KC_PGDN, KC_END , _______, _______, _______, _______, _______, _______,\
-      _______, _______, _______, _______,TG(_ADJ), KC_ENT , KC_DEL , TG(_ADJ), _______, _______, _______, _______          \
-   ),
-
-   [_ADJ] = _LAYOUT( \
-      KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12, KC_PSCR, \
-      RGB_SPI, RGB_VAI, RGB_SAI, RGB_HUI, RGB_MOD, RGB_TOG, _______, _______, KC_P7,   KC_P8,   KC_P9,   _______,         \
-      RGB_SPD, RGB_VAD, RGB_SAD, RGB_HUD, RGB_RMOD,  RESET, _______, _______, KC_P4,   KC_P5,   KC_P6,   _______,         \
-      _______, _______, _______, _______, _______, _______, _______, _______, KC_P1,   KC_P2,   KC_P3,   _______, _______,\
-      _______, _______, _______, _______,TG(_ADJ), _______, _______,TG(_ADJ), KC_P0,   KC_PDOT, KC_NLCK, _______           \
+      KC_GRV,  KC_PSCR, KC_SLCK, KC_PAUS, _______, _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, _______,         \
+      _______, _______, _______, _______, KC_INS,  KC_PGUP, KC_HOME, KC_LEFT, KC_UP,   KC_DOWN, KC_RGHT, KC_ENT,         \
+      _______, _______, _______, KC_CAPS, KC_DEL,  KC_PGDN, KC_END,  _______, _______, _______, _______, _______, _______,\
+      _______, _______, _______, _______, _______, KC_SPC,  KC_DEL,  _______, _______, _______, _______, _______          \
    )
 };
 
 
 int menu_tick = 0;
 
-const int SHOW_MENU_TIMEOUT = 3000;
+const int SHOW_MENU_TIMEOUT = 5000;
 
 bool rewrite_layer_info = false;
 
@@ -96,10 +87,6 @@ void oled_task_user(void) {
             // oled_write_P(PSTR("Function\n"), false);
             oled_write_P(PSTR(" FUNC   FUNC   FUNC \n"), false);
             break;
-            case _ADJ:
-            // oled_write_P(PSTR("Adjust\n"), false);
-            oled_write_P(PSTR("ADJUST ADJUST ADJUST\n"), false);
-            break;
             default:
             oled_write_P(PSTR("Undefined\n"), false);
             // Or use the write_ln shortcut over adding '\n' to the end of your string
@@ -122,7 +109,10 @@ void oled_task_user(void) {
 
       displayMenu(menustate);
 
-      menu_tick--;
+      if (!menustate.selected)
+      {
+         --menu_tick;
+      }
    }
 }
 #endif
@@ -139,14 +129,20 @@ void encoder_update_user(uint8_t index, bool clockwise) {
    }
    else if (index == 1) {  // Second encoder - left
       if (clockwise) {
-         menu_tick = SHOW_MENU_TIMEOUT;
+         if (0 != menu_tick)
+         {
+            advanceState(&menustate, INPUT_INCREASE);
+         }
 
-         advanceState(&menustate, INPUT_INCREASE);
+         menu_tick = SHOW_MENU_TIMEOUT;
       }
       else {
-         menu_tick = SHOW_MENU_TIMEOUT;
+         if (0 != menu_tick)
+         {
+            advanceState(&menustate, INPUT_DECREASE);
+         }
 
-         advanceState(&menustate, INPUT_DECREASE);
+         menu_tick = SHOW_MENU_TIMEOUT;
       }
    }
 }
@@ -166,9 +162,12 @@ void dip_switch_update_user(uint8_t index, bool active) {
       case 1:          // left encoder
       if (active)  // pressed
       {
-         menu_tick = SHOW_MENU_TIMEOUT;
+         if (0 != menu_tick)
+         {
+            advanceState(&menustate, INPUT_SELECT);
+         }
 
-         advanceState(&menustate, INPUT_SELECT);
+         menu_tick = SHOW_MENU_TIMEOUT;
       } else  // released
       {
          // do nothing
